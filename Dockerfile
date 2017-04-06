@@ -16,7 +16,8 @@ LABEL maintainer "Evan Wies <evan@neomantra.net>, Ian L. <os@fyianlai.com>"
 
 # Docker Build Arguments
 
-ARG SERF_VERSION="0.8.1"
+# At the time of writing, Kong requires Serf 0.7.0
+ARG SERF_VERSION="0.7.0"
 ARG KONG_VERSION="0.10.1-0"
 
 # Kong requires 1.11.2.1
@@ -143,12 +144,21 @@ ENV OPENSSL_DIR=/usr/
 # Disable daemon mode so the container won't exit immediately
 ENV KONG_NGINX_DAEMON="off"
 
+# Disable code caching so local changes can be tested without restarting Kong
+ENV KONG_LUA_CODE_CACHE=false
+
+# Enable detailed logging
+ENV KONG_LOG_LEVEL=debug
+
 # Install Kong from source
 RUN mkdir /kong/ \
     && cd /kong/ \
     && git clone https://github.com/Mashape/kong.git . \
     && make install \
+    && make dev \
     && apk del .build-deps
+
+WORKDIR /kong/
 
 # Ports for proxy, admin API, and clustering
 EXPOSE 7946 8000 8001 8443
