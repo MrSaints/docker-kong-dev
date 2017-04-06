@@ -1,2 +1,5 @@
-data/
+.git
+data
 docker-compose.yml
+kong
+kong-plugin
