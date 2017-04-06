@@ -16,16 +16,14 @@ LABEL maintainer "Evan Wies <evan@neomantra.net>, Ian L. <os@fyianlai.com>"
 
 # Docker Build Arguments
 
-# At the time of writing, Kong requires Serf 0.7.0
-ARG SERF_VERSION="0.7.0"
+ARG SERF_VERSION="0.8.0"
 ARG KONG_VERSION="0.10.1-0"
 
-# Kong requires 1.11.2.1
-# OpenResty 1.11.2.2 works too, but it requires the
-# `--without-luajit-lua52` compilation flag.
-ARG RESTY_VERSION="1.11.2.1"
+# `--without-luajit-lua52` compilation flag is required
+# for Kong to work with OpenResty 1.11.2.2
+ARG RESTY_VERSION="1.11.2.2"
 
-ARG RESTY_LUAROCKS_VERSION="2.3.0"
+ARG RESTY_LUAROCKS_VERSION="2.4.2"
 ARG RESTY_OPENSSL_VERSION="1.0.2j"
 ARG RESTY_PCRE_VERSION="8.39"
 ARG RESTY_J="1"
@@ -58,6 +56,7 @@ ARG RESTY_CONFIG_OPTIONS="\
     --with-stream \
     --with-stream_ssl_module \
     --with-threads \
+    --without-luajit-lua52 \
     "
 
 # These are not intended to be user-specified
@@ -118,7 +117,7 @@ RUN \
     && ./configure \
         --prefix=/usr/local/openresty/luajit \
         --with-lua=/usr/local/openresty/luajit \
-        --lua-suffix=jit-2.1.0-beta2 \
+        --lua-suffix=jit \
         --with-lua-include=/usr/local/openresty/luajit/include/luajit-2.1 \
     && make build \
     && make install \
@@ -141,9 +140,6 @@ RUN cd /tmp/ \
 # Fix path to OpenSSL directory for luarocks to work
 ENV OPENSSL_DIR=/usr/
 
-# Disable daemon mode so the container won't exit immediately
-ENV KONG_NGINX_DAEMON="off"
-
 # Disable code caching so local changes can be tested without restarting Kong
 ENV KONG_LUA_CODE_CACHE=false
 
@@ -161,4 +157,4 @@ RUN mkdir /kong/ \
 WORKDIR /kong/
 
 # Ports for proxy, admin API, and clustering
-EXPOSE 7946 8000 8001 8443
+EXPOSE 7946 8000 8001 8443 8444
