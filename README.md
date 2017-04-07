@@ -1,5 +1,7 @@
 # docker-kong-dev
 
+[![](https://images.microbadger.com/badges/image/mrsaints/kong-dev.svg)](https://microbadger.com/images/mrsaints/kong-dev "Get your own image badge on microbadger.com")
+
 _A work in progress. Use at your own discretion._
 
 An unofficial Docker image (tooling) for [Kong][kong] testing, and development.
@@ -9,7 +11,7 @@ An unofficial Docker image (tooling) for [Kong][kong] testing, and development.
 This repository provides lightweight tooling for testing, and developing Kong.
 It is intended to serve as an unofficial, easy-to-use, alternative to [kong-vagrant][] for developing on Kong or on custom plugins.
 
-The `mrsaints/docker-kong-dev` image contains all the necessary dependencies to run, test, and develop Kong (e.g. OpenResty, luarocks, Serf, and Kong). It is a fork of [`openresty/openresty:alpine-fat`][openresty-docker].
+The [`mrsaints/kong-dev`][kong-dev] image contains all the necessary dependencies to run, test, and develop Kong (e.g. OpenResty, luarocks, Serf, and Kong). It is a fork of [`openresty/openresty:alpine-fat`][openresty-docker].
 
 
 ## Getting Started
@@ -33,4 +35,5 @@ bin/busted -o gtest -v --exclude-tags=ci /kong-plugin/spec/
 
 [kong]: https://github.com/Mashape/kong/
 [kong-vagrant]: https://github.com/Mashape/kong-vagrant/
+[kong-dev]: https://hub.docker.com/r/mrsaints/kong-dev/
 [openresty-docker]: https://hub.docker.com/r/openresty/openresty/
