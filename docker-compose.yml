@@ -6,12 +6,14 @@ services:
       dockerfile: "Dockerfile"
     image: "mrsaints/kong-dev"
     command: ["kong", "start", "-v"]
+    entrypoint: /kong-entrypoint.sh
     environment:
       - KONG_DATABASE=postgres
       - KONG_PG_HOST=postgres
       # Disable daemon mode so the container won't exit immediately
       # - KONG_NGINX_DAEMON=off
-    # volumes:
+    volumes:
+      - ./conf/kong-entrypoint.sh:/kong-entrypoint.sh
       # Mount local Kong repository
       # - ./kong/:/kong/
       # Mount custom plugin
