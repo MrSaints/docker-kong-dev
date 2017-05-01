@@ -22,7 +22,8 @@ To get started, clone this repository, and modify the `docker-compose.yml` file 
 Alternatively, you can clone the [`Mashape/kong-plugin`][kong-plugin] boilerplate into this directory to begin working on your custom plugin. The [`Mashape/kong`][kong] repository can also be cloned into this directory.
 
 Once ready, run `docker-compose run --rm --service-ports kong bash`, and you can begin running commands like `kong start -v`.
-_The database might take a while to start up. There is no entrypoint for Kong to wait for the database._
+
+_There is an entrypoint for Kong to wait for the database. To bypass it, pass a `-W` flag before your command, e.g. `docker-compose run --rm --service-ports kong -W bash`. You can even pass a `--no-deps` flag after `run` to launch Kong without the database_
 
 No restarts should be needed for local changes to be reflected (assuming the code is mounted). The default log level has also been set to `DEBUG`.
 
