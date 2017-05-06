@@ -16,8 +16,7 @@ LABEL maintainer "Evan Wies <evan@neomantra.net>, Ian L. <os@fyianlai.com>"
 
 # Docker Build Arguments
 
-ARG SERF_VERSION="0.8.0"
-ARG KONG_VERSION="0.10.1-0"
+ARG SERF_VERSION="0.7.0"
 
 # `--without-luajit-lua52` compilation flag is required
 # for Kong to work with OpenResty 1.11.2.2
@@ -156,5 +155,7 @@ RUN mkdir /kong/ \
 
 WORKDIR /kong/
 
+RUN nginx -V && resty -V && luarocks --version && serf version
+
 # Ports for proxy, admin API, and clustering
-EXPOSE 7946 8000 8001 8443 8444
+EXPOSE 7946 8000 8001 8443
