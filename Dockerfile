@@ -146,7 +146,7 @@ ENV KONG_LUA_CODE_CACHE=false
 ENV KONG_LOG_LEVEL=debug
 
 # Set kong version
-ENV KONG_VERSION=0.11.0
+ENV KONG_VERSION=c7b4b48e6fd26c2789e38458d0a099ef08e631bb
 
 # Install Kong from source
 RUN mkdir /kong/ \
