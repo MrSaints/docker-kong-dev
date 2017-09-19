@@ -11,4 +11,10 @@ else
     done
 fi
 
+# remove hosts configs for busted tests
+sed -i '/dns_hostsfile = spec\/fixtures\/hosts/d' /kong/spec/kong_tests.conf
+
+# run kong migrations
+kong migrations up
+
 exec "$@"

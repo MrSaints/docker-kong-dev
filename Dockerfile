@@ -19,8 +19,8 @@ LABEL maintainer "Evan Wies <evan@neomantra.net>, Ian L. <os@fyianlai.com>"
 ARG SERF_VERSION="0.7.0"
 
 # `--without-luajit-lua52` compilation flag is required
-# for Kong to work with OpenResty 1.11.2.2
-ARG RESTY_VERSION="1.11.2.2"
+# for Kong to work with OpenResty 1.11.2.4
+ARG RESTY_VERSION="1.11.2.4"
 
 ARG RESTY_LUAROCKS_VERSION="2.4.2"
 ARG RESTY_OPENSSL_VERSION="1.0.2j"
@@ -145,10 +145,14 @@ ENV KONG_LUA_CODE_CACHE=false
 # Enable detailed logging
 ENV KONG_LOG_LEVEL=debug
 
+# Set kong version
+ENV KONG_VERSION=0.11.0
+
 # Install Kong from source
 RUN mkdir /kong/ \
     && cd /kong/ \
     && git clone https://github.com/Mashape/kong.git . \
+    && git checkout $KONG_VERSION \
     && make install \
     && make dev \
     && apk del .build-deps
