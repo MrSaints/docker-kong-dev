@@ -11,4 +11,13 @@ else
     done
 fi
 
+# Remove Kong specified `hosts` file as it conflicts
+# with the `hosts` modifications made by Docker (Compose)
+sed -i '/dns_hostsfile = spec\/fixtures\/hosts/d' /kong/spec/kong_tests.conf
+
+# Run Kong migrations
+# As of 0.11.0, migrations are not executed automatically
+# on `kong start`
+kong migrations up
+
 exec "$@"
